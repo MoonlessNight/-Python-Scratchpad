@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark"><title>Calculadora | Lumen</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="ambient"></div>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Lumen inicio"><span class="brand-mark">∑</span><span>LUMEN<small>CALCULADORA</small></span></a>
+  <div class="top-actions"><button id="guideBtn" class="button subtle">Guía</button><button id="tutorialBtn" class="button primary">▶ Tutorial en vivo</button></div>
+</header>
+<main class="layout">
+<section class="main-column">
+  <div class="eyebrow"><span class="live-dot"></span> ESPACIO DE CÁLCULO</div>
+  <h1>Piensa en números.<br><span>Resuelve con claridad.</span></h1>
+  <p class="intro">Una calculadora para operaciones rápidas, fórmulas y variables reutilizables.</p>
+  <section class="calculator panel" id="calculator">
+    <div class="display-label"><span>EXPRESIÓN</span><span id="modeLabel">LISTA</span></div>
+    <input id="expression" class="expression" autocomplete="off" spellcheck="false" placeholder="Ej. (25 + 15) * 2" aria-label="Expresión matemática">
+    <div id="suggestions" class="suggestions" role="listbox"></div>
+    <div class="result-line"><span id="resultLabel">RESULTADO</span><output id="result">0</output></div>
+    <div class="keypad" aria-label="Teclado de calculadora">
+      <button data-insert="(">(</button><button data-insert=")">)</button><button data-insert="sqrt(">√</button><button data-action="backspace">⌫</button><button data-action="clear" class="danger-key">AC</button>
+      <button data-insert="7">7</button><button data-insert="8">8</button><button data-insert="9">9</button><button data-insert="/">÷</button><button data-insert="**">xʸ</button>
+      <button data-insert="4">4</button><button data-insert="5">5</button><button data-insert="6">6</button><button data-insert="*">×</button><button data-insert="-">−</button>
+      <button data-insert="1">1</button><button data-insert="2">2</button><button data-insert="3">3</button><button data-insert="+">+</button><button data-insert="%">mod</button>
+      <button data-insert="pi">π</button><button data-insert="0">0</button><button data-insert=".">.</button><button data-insert="round(">rnd</button><button data-action="calculate" class="equals">=</button>
+    </div>
+    <div class="calc-footer"><span>Enter para calcular · Esc para limpiar</span><button id="copyResult" class="text-button">Copiar resultado</button></div>
+  </section>
+  <section class="panel variable-panel" id="variablesPanel">
+    <div class="section-heading"><div><span class="eyebrow">MEMORIA DE TRABAJO</span><h2>Variables</h2></div><span class="counter" id="variableCount">0 guardadas</span></div>
+    <p class="muted">Guarda resultados y reutilízalos en operaciones posteriores. Ejemplo: <code>precio * unidades</code>.</p>
+    <div class="variable-form"><input id="variableName" placeholder="nombre_variable" aria-label="Nombre de variable"><input id="variableExpression" placeholder="Expresión o resultado" aria-label="Expresión de variable"><button id="saveVariable" class="button primary">Guardar</button></div>
+    <div id="variablesList" class="variables-list empty-note">Todavía no hay variables.</div>
+  </section>
+</section>
+<aside class="side-column">
+  <section class="panel history-panel" id="historyPanel">
+    <div class="section-heading"><div><span class="eyebrow">TUS CÁLCULOS</span><h2>Historial</h2></div><button id="clearHistory" class="text-button">Limpiar</button></div>
+    <p class="muted">Cada operación puede recuperarse, editarse o eliminarse.</p>
+    <div id="historyList" class="history-list empty-note">Aún no has calculado nada.</div>
+  </section>
+  <section class="panel settings-panel" id="settingsPanel">
+    <div class="section-heading"><div><span class="eyebrow">A TU MANERA</span><h2>Personalización</h2></div><span class="settings-icon">⚙</span></div>
+    <label class="setting-row"><span><b>Tema</b><small>Claro, oscuro o sistema</small></span><select id="themeSelect"><option value="system">Sistema</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label>
+    <label class="setting-row"><span><b>Fuente</b><small>Estilo de lectura</small></span><select id="fontSelect"><option value="system">Sistema</option><option value="serif">Serif</option><option value="mono">Monoespaciada</option></select></label>
+    <label class="setting-row"><span><b>Fondo personalizado</b><small>URL de imagen (opcional)</small></span></label>
+    <input id="backgroundUrl" class="wide-input" placeholder="https://.../fondo.jpg">
+    <label class="setting-row"><span><b>Sonido</b><small>URL de audio opcional</small></span><input id="soundUrl" class="url-input" placeholder="https://.../sonido.mp3"></label>
+    <div class="toggle-list">
+      <label class="toggle-row"><span>Sonidos de interfaz</span><input type="checkbox" id="soundsToggle"></label>
+      <label class="toggle-row"><span>Historial</span><input type="checkbox" id="historyToggle"></label>
+      <label class="toggle-row"><span>Variables</span><input type="checkbox" id="variablesToggle"></label>
+    </div>
+    <p class="tiny-note">Al desactivar historial o variables, la función se oculta y deja de usarse. La calculadora sigue operativa.</p>
+    <button id="saveSettings" class="button subtle full-width">Guardar preferencias</button>
+  </section>
+</aside>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="guideModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+ <div class="modal-card"><button class="close-modal" data-close="guideModal" aria-label="Cerrar">×</button><span class="eyebrow">GUÍA RÁPIDA</span><h2 id="guideTitle">Todo lo esencial, sin ruido.</h2>
+ <div class="guide-grid"><article><span>01</span><h3>Calcula</h3><p>Escribe <code>(12 + 8) * 3</code> o usa el teclado visual. Pulsa Enter o el botón igual.</p></article><article><span>02</span><h3>Reutiliza</h3><p>Guarda <code>subtotal = 120 * 4</code> usando el formulario de variables y luego consulta <code>subtotal * 1.19</code>.</p></article><article><span>03</span><h3>Gestiona</h3><p>En historial puedes volver a cargar una expresión, editarla o eliminar una entrada.</p></article><article><span>04</span><h3>Personaliza</h3><p>Elige tema y fuente, añade una imagen de fondo o una URL de sonido de confianza.</p></article></div>
+ <p class="muted">Funciones admitidas: <code>sqrt</code>, <code>abs</code>, <code>round</code>, <code>floor</code>, <code>ceil</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>log</code>, <code>log10</code>, <code>exp</code>, <code>min</code>, <code>max</code>, además de <code>pi</code> y <code>e</code>. Trigonometría en radianes.</p>
+ <button class="button primary full-width" data-close="guideModal">Entendido</button></div>
+</div>
+<div id="tutorialOverlay" class="tutorial-overlay hidden"><div class="tutorial-card"><div class="tutorial-step" id="tutorialStep">PASO 1 DE 5</div><h2 id="tutorialHeading">Tu espacio de cálculo</h2><p id="tutorialText">Aquí escribirás las expresiones.</p><div class="tutorial-actions"><button id="tutorialSkip" class="button subtle">Salir</button><button id="tutorialNext" class="button primary">Siguiente →</button></div></div></div>
+<script src="/app.js" defer></script>
+</body></html>
